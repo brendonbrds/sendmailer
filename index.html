@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="main-contact-form" name="contact-form" method="post" action="">
+        <div class="row  wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Nome:"
+                        required="required">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control" placeholder="E-mail:"
+                        required="required">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" name="subject" id="subject" class="form-control" placeholder="Assunto"
+                required="required">
+        </div>
+        <div class="form-group">
+            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Insira o seu texto"
+                required="required"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn-submit">Enviar</button>
+        </div>
+    </form>
+
+    <script>
+        var form = $('#main-contact-form');
+        form.submit(function (event) {
+            event.preventDefault();
+            var dataUrl, name, email, subject, msg, url, form_status;
+            name = $('#name').val();
+            email = $('#email').val();
+            subject = $('#subject').val();
+            msg = $('#message').val();
+            dataUrl = "name=" + name + "&email=" + email + "&subject=" + subject + "&message=" + msg;
+            url = "https://emailtestephp.000webhostapp.com/sendemail.php";
+            form_status = $('<div class="form_status"></div>');
+            //alert(dataUrl); para debugar
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: dataUrl,
+                dataType: "html",
+                crossDomain: true,
+                cache: false,                
+                beforeSend: function () {
+                    form.prepend(form_status.html(
+                        '<p><i class="fa fa-spinner fa-spin"></i> E-mail está sendo enviado...</p>'
+                    ).fadeIn());
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                },
+            }).done(function (data) {
+                form_status.html(
+                    '<p class="text-success">Obrigado por entrar em contato, assim que possível responderemos seus questionamentos e informações!</p>'
+                ).delay(3000).fadeOut();
+            });
+        });
+    </script>
+</body>
+
+</html>
