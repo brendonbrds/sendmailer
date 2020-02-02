@@ -8,7 +8,7 @@
     $subject    = $_POST['subject'] ?? "";
     $message    = $_POST['message'] ?? "";
     $from       = 'Contato Website Churras Curitiba' ?? "";
-    $to         = 'brendonbrds12@gmail.com' ?? "";//replace with your email
+    $to         = 'youremail@mail.com' ?? "";//replace with your email
     $data_envio = date('d/m/Y')?? null;
     $hora_envio = date('H:i:s')?? null;
 
